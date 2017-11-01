@@ -35,6 +35,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    <dependencies>
+    	<dependency>  
+             <groupId>junit</groupId>  
+             <artifactId>junit</artifactId>  
+             <version>4.10</version>  
+             <scope>test</scope>  
+        </dependency>
+    </dependencies>
+    
     
 	<modules>
         <module>ivgmq-b2-common</module>
