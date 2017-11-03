@@ -19,6 +19,7 @@ import invengo.cn.rocketmq.remoting.exception.RemotingTimeoutException;
 import invengo.cn.rocketmq.remoting.protocol.RemotingCommand;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -65,6 +66,10 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 		
 		this.bootstrap.group(this.eventLoopGroupWorker).channel(NioSocketChannel.class)
 			.option(ChannelOption.TCP_NODELAY, true)
+			.option(ChannelOption.SO_KEEPALIVE, false)
+			.option(ChannelOption.SO_SNDBUF, nettyClientConfig.getClientSocketSndBufSize())
+			.option(ChannelOption.SO_RCVBUF, nettyClientConfig.getClientSocketRcvBufSize())
+			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, nettyClientConfig.getConnectTimeoutMillis())
 			.handler(new ChannelInitializer<SocketChannel>() {
 
 				@Override
@@ -72,6 +77,7 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 					ch.pipeline().addLast(defaultEventExecutorGroup, 
 							new NettyEncoder(),
 							new NettyDecoder(),
+							new NettyConnectManagerHandler(),
 							new NettyClientHandler());
 					
 				}
@@ -169,12 +175,23 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 		return null;
 	}
 	
+	class NettyConnectManagerHandler extends ChannelDuplexHandler{
+		
+		@Override
+		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+			final String remoteAddress = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
+            logger.getLogger().warn("NETTY CLIENT PIPELINE: exceptionCaught {}", remoteAddress);
+            logger.getLogger().warn("NETTY CLIENT PIPELINE: exceptionCaught exception.", cause);
+		}
+		
+	}
+	
 	class NettyClientHandler extends SimpleChannelInboundHandler<RemotingCommand>{
 
 		@Override
-		protected void channelRead0(ChannelHandlerContext arg0, RemotingCommand arg1) throws Exception {
-			// TODO Auto-generated method stub
-			
+		protected void channelRead0(ChannelHandlerContext ctx, RemotingCommand command) throws Exception {
+			logger.getLogger().info(new String(command.getBody(),"utf-8"));
+			processMessageReceived(ctx, command);
 		}
 		
 	}

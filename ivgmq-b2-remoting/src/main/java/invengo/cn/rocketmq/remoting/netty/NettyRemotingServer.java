@@ -1,6 +1,7 @@
 package invengo.cn.rocketmq.remoting.netty;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,9 +14,11 @@ import invengo.cn.rocketmq.remoting.InvokeCallback;
 import invengo.cn.rocketmq.remoting.RPCHook;
 import invengo.cn.rocketmq.remoting.RemotingServer;
 import invengo.cn.rocketmq.remoting.common.Pair;
+import invengo.cn.rocketmq.remoting.common.RemotingHelper;
 import invengo.cn.rocketmq.remoting.protocol.RemotingCommand;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -24,6 +27,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoop;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
@@ -37,6 +41,7 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 	private final NioEventLoopGroup eventLoopGroupBoss;
 	
 	private final ChannelEventListener channelEventListener;
+	private final ExecutorService publicExecutor;
 	
 	private DefaultEventExecutorGroup defaultEventExecutorGroup;
 	
@@ -64,6 +69,13 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 				return new Thread(r, String.format("NettyServerSelector_%d_%d", selectorThreadNums,threadIndex.incrementAndGet()));
 			}
 		});
+		final int publicThreadNums = 4;
+		this.publicExecutor = Executors.newFixedThreadPool(publicThreadNums, new ThreadFactory() {
+			AtomicInteger threadIndex = new AtomicInteger(0);
+			public Thread newThread(Runnable r) {
+				return new Thread(r, String.format("NettyServerPublicExecutor_%d_%d", selectorThreadNums,threadIndex.incrementAndGet()));
+			}
+		});
 		
 	}
 
@@ -73,20 +85,25 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 		this.defaultEventExecutorGroup = new DefaultEventExecutorGroup(serverWorkThreads, new ThreadFactory() {
 			AtomicInteger threadIndex = new AtomicInteger(0);
 			public Thread newThread(Runnable r) {
-				return new Thread(r, String.format("NettyServerSelector_%d_%d", serverWorkThreads,threadIndex.incrementAndGet()));
+				return new Thread(r, String.format("NettyServerWorker_%d_%d", serverWorkThreads,threadIndex.incrementAndGet()));
 			}
 		});
 		this.serverBootstrap.group(eventLoopGroupBoss, eventLoopGroupSelector).channel(NioServerSocketChannel.class)
 			.localAddress(8888)
+			.option(ChannelOption.SO_BACKLOG, 1024)
+			.option(ChannelOption.SO_REUSEADDR, true)
 			.childOption(ChannelOption.TCP_NODELAY, true)
-			.childHandler(new ChannelInitializer<Channel>() {
+			.childOption(ChannelOption.SO_SNDBUF, nettyServerConfig.getServerSocketSndBufSize())
+			.childOption(ChannelOption.SO_RCVBUF, nettyServerConfig.getServerSocketRcvBufSize())
+			.childHandler(new ChannelInitializer<SocketChannel>() {
 
 				@Override
-				protected void initChannel(Channel ch) throws Exception {
+				protected void initChannel(SocketChannel ch) throws Exception {
 					ch.pipeline().addLast(
 							defaultEventExecutorGroup,
 							new NettyEncoder(),
 							new NettyDecoder(),
+							new NettyConnectManagerHandler(),
 							new NettyServerHandler());
 					
 					
@@ -114,8 +131,13 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 	}
 
 	public void registerProcessor(int requestCode, NettyRequestProcessor processor, ExecutorService executorService) {
-		// TODO Auto-generated method stub
-		
+		ExecutorService executorThis = executorService;
+		if (executorThis == null) {
+			executorThis = this.publicExecutor;
+		}
+		Pair<NettyRequestProcessor, ExecutorService> processPair = 
+				new Pair<NettyRequestProcessor, ExecutorService>(processor, executorThis);
+		this.processorTable.put(requestCode, processPair);
 	}
 
 	public void registerDefaultProcessor(NettyRequestProcessor processor, ExecutorService executorService) {
@@ -147,14 +169,25 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 		// TODO Auto-generated method stub
 		
 	}
+	
+	class NettyConnectManagerHandler extends ChannelDuplexHandler{
+		
+		@Override
+		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+			final String remoteAddress = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
+            logger.getLogger().warn("NETTY SERVER PIPELINE: exceptionCaught {}", remoteAddress);
+            logger.getLogger().warn("NETTY SERVER PIPELINE: exceptionCaught exception.", cause);
+		}
+		
+	}
 
 	class NettyServerHandler extends SimpleChannelInboundHandler<RemotingCommand>{
 
 		@Override
 		protected void channelRead0(ChannelHandlerContext ctx, RemotingCommand command) throws Exception {
 			
-			logger.getLogger().info(new String(command.getBody()));
-			
+			logger.getLogger().info(new String(command.getBody(),"utf-8"));
+			processMessageReceived(ctx, command);
 		}
 		
 	}

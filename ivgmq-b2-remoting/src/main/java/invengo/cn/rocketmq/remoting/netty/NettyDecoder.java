@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import invengo.cn.rocketmq.remoting.common.RemotingHelper;
 import invengo.cn.rocketmq.remoting.protocol.RemotingCommand;

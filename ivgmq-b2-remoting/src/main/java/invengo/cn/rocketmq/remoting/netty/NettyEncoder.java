@@ -1,7 +1,6 @@
 package invengo.cn.rocketmq.remoting.netty;
 
 import java.nio.ByteBuffer;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,12 +17,7 @@ public class NettyEncoder extends MessageToByteEncoder<RemotingCommand>{
 	protected void encode(ChannelHandlerContext ctx, RemotingCommand msg, ByteBuf out) throws Exception {
 		try {
 			ByteBuffer header = msg.encodeHeader();
-			//logger.info("msg: "+ msg.getCode());
 			out.writeBytes(header);
-			/*byte[] body = msg.getBody();
-            if (body != null) {
-                out.writeBytes(body);
-            }*/
 		} catch (Exception e) {
 			logger.error("encode exception. ", e);
 			if (msg != null) {

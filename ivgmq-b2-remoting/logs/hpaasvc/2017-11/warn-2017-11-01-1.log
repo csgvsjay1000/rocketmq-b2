@@ -1,0 +1,1 @@
+[16:11:55:104] [WARN] - invengo.cn.rocketmq.remoting.netty.NettyAbstractRemoting$1.operationComplete(NettyAbstractRemoting.java:44) - send a request command to a channel </127.0.0.1:8888> success
