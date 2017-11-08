@@ -1,3 +1,6 @@
-[10:32:20:678] [INFO] - invengo.cn.rocketmq.namesrv.routeinfo.RouteInfoManagerTest.testGetAllTopicList(RouteInfoManagerTest.java:51) - invengo.cn.rocketmq.common.protocol.body.TopicList@2254127a
-[10:32:57:465] [INFO] - invengo.cn.rocketmq.namesrv.routeinfo.RouteInfoManagerTest.testGetAllTopicList(RouteInfoManagerTest.java:51) - invengo.cn.rocketmq.common.protocol.body.TopicList@387a8303
-[10:34:09:079] [INFO] - invengo.cn.rocketmq.namesrv.routeinfo.RouteInfoManagerTest.testGetAllTopicList(RouteInfoManagerTest.java:51) - invengo.cn.rocketmq.common.protocol.body.TopicList@28cda624
+[14:27:43:535] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:8888
+[15:05:19:841] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
+[15:05:26:989] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:195) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:51129]
+[15:17:19:528] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
+[15:17:29:705] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:51249]
+[15:17:29:730] [INFO] - invengo.cn.rocketmq.namesrv.processor.DefaultRequestProcessor.processRequest(DefaultRequestProcessor.java:22) - hello

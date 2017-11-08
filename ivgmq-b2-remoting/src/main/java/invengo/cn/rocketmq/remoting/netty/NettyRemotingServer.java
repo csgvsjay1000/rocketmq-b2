@@ -1,10 +1,13 @@
 package invengo.cn.rocketmq.remoting.netty;
 
+import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
 import invengo.cn.rocketmq.remoting.ChannelEventListener;
@@ -30,6 +33,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
 public class NettyRemotingServer extends NettyAbstractRemoting implements RemotingServer{
+	
+	private static Logger logger = LogManager.getLogger(NettyRemotingServer.class);
 	
 	private final NettyServerConfig nettyServerConfig;
 	private final ServerBootstrap serverBootstrap;
@@ -85,7 +90,7 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 			}
 		});
 		this.serverBootstrap.group(eventLoopGroupBoss, eventLoopGroupSelector).channel(NioServerSocketChannel.class)
-			.localAddress(8888)
+			.localAddress(nettyServerConfig.getListenPort())
 			.option(ChannelOption.SO_BACKLOG, 1024)
 			.option(ChannelOption.SO_REUSEADDR, true)
 			.childOption(ChannelOption.TCP_NODELAY, true)
@@ -108,6 +113,9 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 			});
 		try {
 			ChannelFuture channelFuture = this.serverBootstrap.bind().sync();
+			InetSocketAddress addr = (InetSocketAddress) channelFuture.channel().localAddress();
+			logger.info("server bind success"+channelFuture.channel().localAddress());
+            //this.port = addr.getPort();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,8 +153,11 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 	}
 
 	public void registerDefaultProcessor(NettyRequestProcessor processor, ExecutorService executorService) {
-		// TODO Auto-generated method stub
-		
+		ExecutorService executorThis = executorService;
+		if (executorThis == null) {
+			executorThis = this.publicExecutor;
+		}
+		this.defaultRequestProcessor = new Pair<NettyRequestProcessor, ExecutorService>(processor, executorThis);
 	}
 
 	public int localListenPort() {
@@ -179,6 +190,13 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 		@Override
 		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 			final String remoteAddress = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
+		}
+		
+		@Override
+		public void channelActive(ChannelHandlerContext ctx) throws Exception {
+			final String remoteAddress = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
+			logger.info("NETTY SERVER PIPELINE: channelActive, the channel[{}]", remoteAddress);
+			super.channelActive(ctx);
 		}
 		
 	}

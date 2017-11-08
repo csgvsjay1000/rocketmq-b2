@@ -1,14 +1,22 @@
 package invengo.cn.rocketmq.remoting.protocol;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import invengo.cn.rocketmq.remoting.CommandCustomHeader;
 import io.netty.util.internal.StringUtil;
 
-
 public class RemotingCommand {
-
+	private static Logger logger = LogManager.getLogger(RemotingCommand.class);
 	public static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 	static AtomicInteger requestId = new AtomicInteger(0);
 	private static final int RPC_TYPE = 0;  //flag标志位  第1位, 0 表示request，1表示response
@@ -18,12 +26,14 @@ public class RemotingCommand {
 	private int flag = 0;
 	private int opaque = requestId.incrementAndGet();
 	private String remark;
+	private transient CommandCustomHeader customHeader;
+	private Map<String, String> extFields;
 	private transient byte[] body;
 	
-	public static RemotingCommand createRequestCommand(int code,Object object) {
+	public static RemotingCommand createRequestCommand(int code,CommandCustomHeader header) {
 		RemotingCommand command = new RemotingCommand();
 		command.setCode(code);
-		
+		command.setCustomHeader(header);
 		return command;
 	}
 	
@@ -116,7 +126,100 @@ public class RemotingCommand {
 		return cmd;
 	}
 	
+	public void customHeaderEncode(){
+		if (this.customHeader == null) {
+			return;
+		}
+		Field[] fields = getClazzFields(this.customHeader.getClass());
+		if (extFields == null) {
+			this.extFields = new HashMap<String, String>();
+		}
+		for (Field field : fields) {
+			if (!Modifier.isStatic(field.getModifiers())) {
+				// 不是静态成员
+				String name = field.getName();
+				Object value = null;
+				try {
+					field.setAccessible(true);
+					value = field.get(this.customHeader);
+				} catch (Exception e) {
+					logger.info("Failed to access [{}]",name,e);
+				}
+				if (value != null) {
+					this.extFields.put(name, value.toString());
+				}
+			}
+		}
+	}
 	
+	public static byte[] mapSerialize(Map<String, String> map) {
+		if (null == map || map.isEmpty()) {
+			return null;
+		}
+		// keySize + key + valueSize + value
+		int totalLength = 0;
+		int kvLength = 0;
+		
+		Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator
+					.next();
+			if (entry.getKey() != null && entry.getValue() != null) {
+				// keySize + key Length
+				kvLength = 2+entry.getKey().getBytes(CHARSET_UTF8).length;
+				// valueSize + value Length
+				kvLength += (4 + entry.getValue().getBytes(CHARSET_UTF8).length);
+				totalLength += kvLength;
+			}
+		}
+		ByteBuffer content = ByteBuffer.allocate(totalLength);
+		byte[] key;
+		byte[] val;
+		iterator = map.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator
+					.next();
+			if (entry.getKey() != null && entry.getValue() != null) {
+				key = entry.getKey().getBytes(CHARSET_UTF8);
+				val = entry.getValue().getBytes(CHARSET_UTF8);
+				
+				content.putShort((short)key.length);
+				content.put(key);
+				content.putInt(val.length);
+				content.put(val);
+			}
+		}
+		
+		return content.array();
+	}
+	
+	public static Map<String, String> mapDeserialize(byte[] data) {
+		// keySize + key + valueSize + value
+		Map<String, String> map = new HashMap<String, String>();
+		ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+		
+		short keySize;
+		byte[] key;
+		int valSize;
+		byte[] val;
+		while (byteBuffer.hasRemaining()) {
+			keySize = byteBuffer.getShort();
+			key = new byte[keySize];
+			byteBuffer.get(key);
+			
+			valSize = byteBuffer.getInt();
+			val = new byte[valSize];
+			byteBuffer.get(val);
+			
+			map.put(new String(key, CHARSET_UTF8), new String(val, CHARSET_UTF8));
+		}
+		
+		return map;
+	}
+	
+	private Field[] getClazzFields(Class<? extends CommandCustomHeader> classHeader){
+		return classHeader.getDeclaredFields();
+	}
 	
 	public RemotingCommandType getType() {
 		if (this.isResponseType()) {
@@ -185,6 +288,14 @@ public class RemotingCommand {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public CommandCustomHeader getCustomHeader() {
+		return customHeader;
+	}
+
+	public void setCustomHeader(CommandCustomHeader customHeader) {
+		this.customHeader = customHeader;
 	}
 
 	@Override

@@ -30,6 +30,8 @@ public class NettyAbstractRemoting {
 	protected final ConcurrentMap<Integer/*requestCode*/, Pair<NettyRequestProcessor, ExecutorService> > processorTable = 
 			new ConcurrentHashMap<Integer, Pair<NettyRequestProcessor, ExecutorService>>(64);
 	
+	protected Pair<NettyRequestProcessor, ExecutorService> defaultRequestProcessor;
+	
 	public NettyAbstractRemoting(final int permitsOneway,final int permitsAsync) {
 		this.semaphoreOneway = new Semaphore(permitsOneway,true);
 		this.semaphoreAsync = new Semaphore(permitsAsync, true);
@@ -145,7 +147,9 @@ public class NettyAbstractRemoting {
 	}
 	
 	private void processRequestCommand(final ChannelHandlerContext ctx, final RemotingCommand command){
-		final Pair<NettyRequestProcessor, ExecutorService> matched = this.processorTable.get(command.getCode());
+		Pair<NettyRequestProcessor, ExecutorService> matched_1 = this.processorTable.get(command.getCode());
+		final Pair<NettyRequestProcessor, ExecutorService> matched = matched_1 == null?this.defaultRequestProcessor:matched_1;
+		
 		int opaque = command.getOpaque();
 		if (matched == null) {
 			String remark = "request type "+command.getCode()+" not supported";

@@ -14,7 +14,13 @@ public class TopicConfig {
     private int perm = PermName.PERM_READ | PermName.PERM_WRITE;  // 权限 可读，可写
     private boolean order = false;
     
+    public TopicConfig() {
+		// TODO Auto-generated constructor stub
+	}
     
+    public TopicConfig(String topicName) {
+		this.topicName = topicName;
+	}
     
 	public static int getDefaultWriteQueueNums() {
 		return defaultWriteQueueNums;
