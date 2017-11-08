@@ -1,11 +1,15 @@
 package invengo.cn.rocketmq.remoting.protocol;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import io.netty.util.internal.StringUtil;
 
 
 public class RemotingCommand {
 
+	public static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 	static AtomicInteger requestId = new AtomicInteger(0);
 	private static final int RPC_TYPE = 0;  //flag标志位  第1位, 0 表示request，1表示response
 	private static final int RPC_ONEWAY = 1;  //flag标志位  第二位, 0 表示RPC，1表示oneway
@@ -13,6 +17,7 @@ public class RemotingCommand {
 	private int code;
 	private int flag = 0;
 	private int opaque = requestId.incrementAndGet();
+	private String remark;
 	private transient byte[] body;
 	
 	public static RemotingCommand createRequestCommand(int code,Object object) {
@@ -23,10 +28,14 @@ public class RemotingCommand {
 	}
 	
 	public static RemotingCommand createResponseCommand(int code) {
+		return createResponseCommand(code, null);
+	}
+	
+	public static RemotingCommand createResponseCommand(int code,String remark) {
 		RemotingCommand command = new RemotingCommand();
 		command.setCode(code);
 		command.makeResponseType();
-		command.setBody("回复".getBytes());
+		command.setRemark(remark);
 		return command;
 	}
 	
@@ -41,6 +50,14 @@ public class RemotingCommand {
 		length += 4;  // code length
 		length += 4;  // flag length
 		length += 4;  // opaque length
+		length += 4;  // remark length
+		int remarkLength = 0;
+		byte[] remarkBytes = null;
+		if (!StringUtil.isNullOrEmpty(remark)) {
+			remarkBytes = remark.getBytes(CHARSET_UTF8);
+			remarkLength = remarkBytes.length;
+		}
+		length += remarkLength;
 		
 		length += bodyLength;
 		
@@ -49,6 +66,15 @@ public class RemotingCommand {
 		byteBuffer.putInt(code);
 		byteBuffer.putInt(flag);
 		byteBuffer.putInt(opaque);
+		
+		if (remarkLength>0) {
+			byteBuffer.putInt(remarkLength);
+			byteBuffer.put(remarkBytes);
+		}else {
+			byteBuffer.putInt(0);
+		}
+		
+		
 		if (body != null) {
 			byteBuffer.put(body);
 		}
@@ -63,14 +89,24 @@ public class RemotingCommand {
 		int code = byteBuffer.getInt();
 		int flag = byteBuffer.getInt();
 		int opaque = byteBuffer.getInt();
+		int remarkHeadLength = byteBuffer.getInt();
 		
 		int headerLength = 4;  // code length
 		headerLength += 4;  // flag length
 		headerLength += 4;  // opaque length
+		headerLength += 4;  // remarkHeadLength
+		
 		
 		cmd.setCode(code);
 		cmd.setFlag(flag);
 		cmd.setOpaque(opaque);
+		if (remarkHeadLength > 0) {
+			headerLength += remarkHeadLength;
+			byte[] remarkBytes = new byte[remarkHeadLength];
+			byteBuffer.get(remarkBytes);
+			cmd.setRemark(new String(remarkBytes, CHARSET_UTF8));
+		}
+		
 		if (length > headerLength) {
 			byte[] bodyData = new byte[length-headerLength];
 			byteBuffer.get(bodyData);
@@ -80,6 +116,8 @@ public class RemotingCommand {
 		return cmd;
 	}
 	
+	
+	
 	public RemotingCommandType getType() {
 		if (this.isResponseType()) {
 			return RemotingCommandType.RESPONSE_COMMAND;
@@ -87,24 +125,24 @@ public class RemotingCommand {
 		return RemotingCommandType.REQUEST_COMMAND;
 	}
 
-	private boolean isResponseType(){
+	public boolean isResponseType(){
 		int bit = 1 << RPC_TYPE;
 		int value = flag & bit;
 		return value>0?true:false;
 	}
 	
-	private void makeResponseType(){
+	public void makeResponseType(){
 		int bit = 1 << RPC_TYPE;
 		this.flag |= bit;
 	}
 	
-	private boolean isOnewayType(){
+	public boolean isOnewayType(){
 		int bit = 1 << RPC_ONEWAY;
 		int value = flag & bit;
 		return value>0?true:false;
 	}
 	
-	private void makeOnewayType(){
+	public void makeOnewayType(){
 		int bit = 1 << RPC_ONEWAY;
 		this.flag |= bit;
 	}
@@ -141,9 +179,17 @@ public class RemotingCommand {
 		this.flag = flag;
 	}
 	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	@Override
     public String toString() {
-        return "RemotingCommand [code=" + code + ", opaque=" + opaque + "]";
+        return "RemotingCommand [code=" + code + ", opaque=" + opaque +", remark="+remark+"]";
     }
 	
 }

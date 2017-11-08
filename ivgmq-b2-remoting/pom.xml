@@ -29,15 +29,15 @@
 
 
     <dependencies>
+    	<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.40</version>
+        </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.16.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>ivg.cn</groupId>
-            <artifactId>ivgmq-b2-common</artifactId>
-            <version>${project.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
     </dependencies>
 </project>

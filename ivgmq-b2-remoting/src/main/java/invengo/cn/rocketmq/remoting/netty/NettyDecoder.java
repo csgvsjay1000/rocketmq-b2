@@ -2,8 +2,6 @@ package invengo.cn.rocketmq.remoting.netty;
 
 import java.nio.ByteBuffer;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
 import invengo.cn.rocketmq.remoting.common.RemotingHelper;
@@ -14,8 +12,6 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 public class NettyDecoder extends LengthFieldBasedFrameDecoder{
 	
-	private static Logger logger = LogManager.getLogger(NettyDecoder.class);
-
 	private static final int FRAME_MAX_LENGTH = 1048576;  // 16M
 	
 	public NettyDecoder() {
@@ -34,7 +30,6 @@ public class NettyDecoder extends LengthFieldBasedFrameDecoder{
 			ByteBuffer byteBuffer = frame.nioBuffer();
 			return RemotingCommand.decode(byteBuffer);
 		} catch (Exception e) {
-			logger.error("decode exception,"+RemotingHelper.parseSocketAddressAddr(ctx.channel().localAddress()), e);
 		}finally {
 			if (frame != null) {
 				frame.release();

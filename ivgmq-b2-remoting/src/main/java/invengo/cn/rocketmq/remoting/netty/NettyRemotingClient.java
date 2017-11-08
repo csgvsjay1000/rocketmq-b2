@@ -7,9 +7,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
-import invengo.cn.rocketmq.common.log.Logger;
-import invengo.cn.rocketmq.common.log.LoggerFactory;
 import invengo.cn.rocketmq.remoting.InvokeCallback;
 import invengo.cn.rocketmq.remoting.RPCHook;
 import invengo.cn.rocketmq.remoting.RemotingClient;
@@ -33,7 +32,6 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
 public class NettyRemotingClient extends NettyAbstractRemoting implements RemotingClient{
 
-	private static Logger logger = LoggerFactory.getLogger(NettyRemotingClient.class);
 
 	private final Bootstrap bootstrap = new Bootstrap();
 	private final EventLoopGroup eventLoopGroupWorker;
@@ -42,6 +40,7 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 	private final NettyClientConfig nettyClientConfig;
 	
 	private DefaultEventExecutorGroup defaultEventExecutorGroup;
+	private final AtomicReference<List<String>> namesrvAddrList = new AtomicReference<List<String>>();
 	
 	public NettyRemotingClient(final NettyClientConfig nettyClientConfig) {
 		super(nettyClientConfig.getClientOnewaySemaphoreValue(), nettyClientConfig.getClientAsyncSemaphoreValue());
@@ -127,14 +126,15 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 		return response;
 	}
 
-	public void invokeAsync(final String addr, RemotingCommand request, long timeoutMillis, InvokeCallback callback) {
-		// TODO Auto-generated method stub
+	public void invokeAsync(final String addr, RemotingCommand request, long timeoutMillis, InvokeCallback callback) throws InterruptedException, RemotingTimeoutException, RemotingSendRequestException {
+		Channel channel = this.getAndCreateChannel(addr);
+		this.invokeAsyncImpl(channel, request, timeoutMillis, callback);
 		
 	}
 
-	public void invokeOneway(final String addr, RemotingCommand request, long timeoutMillis) {
-		// TODO Auto-generated method stub
-		
+	public void invokeOneway(final String addr, RemotingCommand request, long timeoutMillis) throws InterruptedException, RemotingTimeoutException {
+		Channel channel = this.getAndCreateChannel(addr);
+		this.invokeOnewayImpl(channel, request, timeoutMillis);
 	}
 
 	public boolean isChannelWriteable(String addr) {
@@ -156,20 +156,16 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 		
 		ChannelFuture channelFuture = this.bootstrap.connect(RemotingHelper.string2SocketAddress(addr));
 		ChannelWrapper channelWrapper = new ChannelWrapper(channelFuture);
-		logger.getLogger().info(String.format("createChannel: begin to connect remote host [%s] asynchronously", addr));
 		this.channelTables.put(addr, channelWrapper);
 		
 		if(channelFuture.awaitUninterruptibly(nettyClientConfig.getConnectTimeoutMillis(), TimeUnit.MILLISECONDS)){
 			// 连接请求不超时
 			if (channelWrapper.isOK()) {
-				logger.getLogger().info(String.format("createChannel: connect remote host [%s] success, {%s}", addr,channelFuture.toString()));
 				return channelFuture.channel();
 			}else {
-				logger.getLogger().warn(String.format("createChannel: connect remote host [%s] failed, {%s}", addr,channelFuture.toString()));
 			}
 		}else {
 			//请求超时
-			logger.getLogger().warn(String.format("createChannel: connect remote host [%s] timeout %d(ms) ", addr,nettyClientConfig.getConnectTimeoutMillis()));
 		}
 		
 		return null;
@@ -180,8 +176,6 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 		@Override
 		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 			final String remoteAddress = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
-            logger.getLogger().warn("NETTY CLIENT PIPELINE: exceptionCaught {}", remoteAddress);
-            logger.getLogger().warn("NETTY CLIENT PIPELINE: exceptionCaught exception.", cause);
 		}
 		
 	}
@@ -190,7 +184,6 @@ public class NettyRemotingClient extends NettyAbstractRemoting implements Remoti
 
 		@Override
 		protected void channelRead0(ChannelHandlerContext ctx, RemotingCommand command) throws Exception {
-			logger.getLogger().info(new String(command.getBody(),"utf-8"));
 			processMessageReceived(ctx, command);
 		}
 		

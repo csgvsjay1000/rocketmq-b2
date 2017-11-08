@@ -1,0 +1,16 @@
+[10:03:15:271] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyDecoder.decode(NettyDecoder.java:37) - decode exception,127.0.0.1:49735
+java.nio.BufferUnderflowException
+	at java.nio.DirectByteBuffer.get(Unknown Source) ~[?:1.8.0_101]
+	at java.nio.ByteBuffer.get(Unknown Source) ~[?:1.8.0_101]
+	at invengo.cn.rocketmq.remoting.protocol.RemotingCommand.decode(RemotingCommand.java:111) ~[classes/:?]
+	at invengo.cn.rocketmq.remoting.netty.NettyDecoder.decode(NettyDecoder.java:35) [classes/:?]
+	at io.netty.handler.codec.LengthFieldBasedFrameDecoder.decode(LengthFieldBasedFrameDecoder.java:343) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.decodeRemovalReentryProtection(ByteToMessageDecoder.java:489) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.callDecode(ByteToMessageDecoder.java:428) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:265) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.access$600(AbstractChannelHandlerContext.java:38) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.channel.AbstractChannelHandlerContext$7.run(AbstractChannelHandlerContext.java:353) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.util.concurrent.DefaultEventExecutor.run(DefaultEventExecutor.java:66) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858) [netty-all-4.1.16.Final.jar:4.1.16.Final]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_101]

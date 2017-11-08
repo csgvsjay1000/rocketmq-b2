@@ -7,8 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
-import invengo.cn.rocketmq.common.log.Logger;
-import invengo.cn.rocketmq.common.log.LoggerFactory;
 import invengo.cn.rocketmq.remoting.ChannelEventListener;
 import invengo.cn.rocketmq.remoting.InvokeCallback;
 import invengo.cn.rocketmq.remoting.RPCHook;
@@ -33,8 +31,6 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
 public class NettyRemotingServer extends NettyAbstractRemoting implements RemotingServer{
 	
-	private static Logger logger = LoggerFactory.getLogger(NettyRemotingServer.class);
-
 	private final NettyServerConfig nettyServerConfig;
 	private final ServerBootstrap serverBootstrap;
 	private final NioEventLoopGroup eventLoopGroupSelector;
@@ -112,7 +108,6 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 			});
 		try {
 			ChannelFuture channelFuture = this.serverBootstrap.bind().sync();
-			logger.getLogger().info("nettyServer bind successed. addrs: "+channelFuture.channel().localAddress());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -121,7 +116,16 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 	}
 
 	public void shutdown() {
-		// TODO Auto-generated method stub
+		
+		this.eventLoopGroupBoss.shutdownGracefully();
+		this.eventLoopGroupSelector.shutdownGracefully();
+		
+		if (this.defaultEventExecutorGroup != null) {
+			this.defaultEventExecutorGroup.shutdownGracefully();
+		}
+		if (this.publicExecutor != null) {
+			this.publicExecutor.shutdown();
+		}
 		
 	}
 
@@ -175,8 +179,6 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 		@Override
 		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 			final String remoteAddress = RemotingHelper.parseChannelRemoteAddr(ctx.channel());
-            logger.getLogger().warn("NETTY SERVER PIPELINE: exceptionCaught {}", remoteAddress);
-            logger.getLogger().warn("NETTY SERVER PIPELINE: exceptionCaught exception.", cause);
 		}
 		
 	}
@@ -186,7 +188,7 @@ public class NettyRemotingServer extends NettyAbstractRemoting implements Remoti
 		@Override
 		protected void channelRead0(ChannelHandlerContext ctx, RemotingCommand command) throws Exception {
 			
-			logger.getLogger().info(new String(command.getBody(),"utf-8"));
+			//logger.getLogger().info(new String(command.getBody(),"utf-8"));
 			processMessageReceived(ctx, command);
 		}
 		

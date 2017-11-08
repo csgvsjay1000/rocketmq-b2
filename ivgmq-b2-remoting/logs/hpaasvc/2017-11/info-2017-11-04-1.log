@@ -1,0 +1,81 @@
+[09:21:04:686] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[09:21:04:741] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[09:21:04:751] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@56f0cc85(success)}
+[09:21:04:886] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - hello
+[09:21:04:905] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - 回复
+[10:01:55:704] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:01:55:716] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:01:55:731] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@66fdec9(success)}
+[10:03:15:218] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:03:15:230] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:03:15:244] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@550a1967(success)}
+[10:03:15:269] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - null
+[10:04:35:919] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:04:35:931] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:04:35:944] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@66fdec9(success)}
+[10:04:35:966] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - null
+[10:06:02:140] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:06:02:151] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:06:02:164] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@2a640157(success)}
+[10:06:40:367] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:06:40:380] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:06:40:394] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@550a1967(success)}
+[10:06:40:420] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - hello
+[10:06:40:421] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - request type 2 not supported
+[10:12:10:725] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:12:10:736] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:12:10:748] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@2a640157(success)}
+[10:12:10:771] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - hello
+[10:32:53:079] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:32:53:094] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:32:53:110] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@2a640157(success)}
+[10:32:53:141] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - hello
+[10:32:53:141] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:37) - remark: null
+[10:32:53:141] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:39) - body: hello
+[10:37:39:532] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:37:39:548] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:37:39:564] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@66fdec9(success)}
+[10:37:39:579] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyServerHandler.channelRead0(NettyRemotingServer.java:189) - hello
+[10:37:39:595] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50049
+[10:37:39:595] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[10:37:39:595] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - Hi /127.0.0.1:50049
+[10:39:03:355] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:39:03:355] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:39:03:371] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@2a640157(success)}
+[10:39:03:402] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50075
+[10:39:03:402] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[10:39:03:402] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - Hi /127.0.0.1:50075
+[10:42:55:919] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:42:55:930] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:42:55:942] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@550a1967(success)}
+[10:43:00:970] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50101
+[10:43:00:972] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[10:43:02:931] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - Hi /127.0.0.1:50101
+[10:48:48:900] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:48:48:913] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:48:48:926] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@2a640157(success)}
+[10:48:54:205] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50135
+[10:48:54:206] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[10:48:54:211] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - Hi /127.0.0.1:50135
+[10:53:16:081] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:53:16:092] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:53:16:105] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@584f54e6(success)}
+[10:53:16:137] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50161
+[10:53:16:137] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[10:53:57:720] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - Hi /127.0.0.1:50161
+[10:55:56:840] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[10:55:56:852] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[10:55:56:866] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@550a1967(success)}
+[10:55:56:894] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50188
+[10:55:56:894] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[10:55:56:896] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - Hi /127.0.0.1:50188
+[11:01:14:806] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[11:01:14:818] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[11:01:14:830] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@550a1967(success)}
+[11:01:14:859] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - client remark receive: request type 2 not supported
+[11:01:38:282] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:115) - nettyServer bind successed. addrs: /0:0:0:0:0:0:0:0:8888
+[11:01:38:294] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:159) - createChannel: begin to connect remote host [localhost:8888] asynchronously
+[11:01:38:309] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient.createChannel(NettyRemotingClient.java:165) - createChannel: connect remote host [localhost:8888] success, {AbstractBootstrap$PendingRegistrationPromise@2a640157(success)}
+[11:01:38:338] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:38) - remark: Hi /127.0.0.1:50240
+[11:01:38:339] [INFO] - invengo.cn.rocketmq.remoting.NettyServerTest$1.processRequest(NettyServerTest.java:40) - server receive body: hello
+[11:01:38:340] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingClient$NettyClientHandler.channelRead0(NettyRemotingClient.java:193) - client remark receive: Hi /127.0.0.1:50240

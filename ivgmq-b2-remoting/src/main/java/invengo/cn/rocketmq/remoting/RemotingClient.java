@@ -24,9 +24,10 @@ public interface RemotingClient extends RemotingService{
 	RemotingCommand invokeSync(final String addr,final RemotingCommand request,final long timeoutMillis) 
 			throws InterruptedException,RemotingTimeoutException, RemotingSendRequestException;
 	
-	void invokeAsync(final String addr,final RemotingCommand request,final long timeoutMillis,InvokeCallback callback);
+	void invokeAsync(final String addr,final RemotingCommand request,final long timeoutMillis,InvokeCallback callback) 
+			throws InterruptedException, RemotingTimeoutException, RemotingSendRequestException;
 
-	void invokeOneway(final String addr,final RemotingCommand request,final long timeoutMillis);
+	void invokeOneway(final String addr,final RemotingCommand request,final long timeoutMillis) throws InterruptedException, RemotingTimeoutException;
 	
 	boolean isChannelWriteable(final String addr);
 	

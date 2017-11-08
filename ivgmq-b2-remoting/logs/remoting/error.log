@@ -1,18 +1,5 @@
-[11:08:51:898] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyEncoder.encode(NettyEncoder.java:22) - encode exception. 
-java.lang.NullPointerException
-	at java.nio.ByteBuffer.put(Unknown Source) ~[?:1.8.0_101]
-	at invengo.cn.rocketmq.remoting.protocol.RemotingCommand.encodeHeader(RemotingCommand.java:33) ~[classes/:?]
-	at invengo.cn.rocketmq.remoting.protocol.RemotingCommand.encodeHeader(RemotingCommand.java:26) ~[classes/:?]
-	at invengo.cn.rocketmq.remoting.netty.NettyEncoder.encode(NettyEncoder.java:19) [classes/:?]
-	at invengo.cn.rocketmq.remoting.netty.NettyEncoder.encode(NettyEncoder.java:1) [classes/:?]
-	at io.netty.handler.codec.MessageToByteEncoder.write(MessageToByteEncoder.java:107) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.channel.AbstractChannelHandlerContext.invokeWrite0(AbstractChannelHandlerContext.java:738) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.channel.AbstractChannelHandlerContext.invokeWrite(AbstractChannelHandlerContext.java:730) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.channel.AbstractChannelHandlerContext.access$1900(AbstractChannelHandlerContext.java:38) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.channel.AbstractChannelHandlerContext$AbstractWriteTask.write(AbstractChannelHandlerContext.java:1081) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.channel.AbstractChannelHandlerContext$WriteAndFlushTask.write(AbstractChannelHandlerContext.java:1128) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.channel.AbstractChannelHandlerContext$AbstractWriteTask.run(AbstractChannelHandlerContext.java:1070) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.util.concurrent.DefaultEventExecutor.run(DefaultEventExecutor.java:66) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858) [netty-all-4.1.16.Final.jar:4.1.16.Final]
-	at java.lang.Thread.run(Unknown Source) [?:1.8.0_101]
-[11:08:51:908] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyEncoder.encode(NettyEncoder.java:24) - invengo.cn.rocketmq.remoting.protocol.RemotingCommand@7e22a57f
+[10:50:01:596] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyAbstractRemoting.invokeAsyncImpl(NettyAbstractRemoting.java:86) - 尝试获取流量锁超时
+[10:57:44:749] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyAbstractRemoting.invokeAsyncImpl(NettyAbstractRemoting.java:86) - 尝试获取流量锁超时
+[10:58:10:724] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyAbstractRemoting.invokeAsyncImpl(NettyAbstractRemoting.java:86) - 尝试获取流量锁超时
+[11:16:41:892] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyAbstractRemoting.invokeAsyncImpl(NettyAbstractRemoting.java:87) - 尝试获取流量锁超时
+[11:29:03:861] [ERROR] - invengo.cn.rocketmq.remoting.netty.NettyAbstractRemoting.invokeAsyncImpl(NettyAbstractRemoting.java:87) - 尝试获取流量锁超时

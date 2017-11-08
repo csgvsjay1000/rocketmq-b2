@@ -1,0 +1,2 @@
+[20:17:16:762] [INFO] - invengo.cn.rocketmq.namesrv.routeinfo.RouteInfoManagerTest.testGetAllClusterInfo(RouteInfoManagerTest.java:32) - invengo.cn.rocketmq.common.protocol.body.ClusterInfo@1f9f6368
+[20:20:10:853] [INFO] - invengo.cn.rocketmq.namesrv.routeinfo.RouteInfoManagerTest.testGetAllClusterInfo(RouteInfoManagerTest.java:32) - invengo.cn.rocketmq.common.protocol.body.ClusterInfo@d23e042

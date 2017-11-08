@@ -42,12 +42,21 @@
              <version>4.10</version>  
              <scope>test</scope>  
         </dependency>
+        <dependency>    
+			<groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.6.3</version>
+            <scope>test</scope>
+		</dependency>  
     </dependencies>
     
     
 	<modules>
         <module>ivgmq-b2-common</module>
         <module>ivgmq-b2-remoting</module>
+        <module>ivgmq-b2-namesrv</module>
+        <module>ivgmq-b2-broker</module>
+        
     </modules>
    
 </project>

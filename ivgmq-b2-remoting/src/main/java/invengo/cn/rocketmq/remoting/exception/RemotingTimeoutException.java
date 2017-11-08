@@ -2,6 +2,10 @@ package invengo.cn.rocketmq.remoting.exception;
 
 public class RemotingTimeoutException extends RemotingException{
 
+	public RemotingTimeoutException(String info) {
+		super(info);
+	}
+	
 	/**
 	 * 
 	 */
