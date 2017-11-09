@@ -1,12 +1,12 @@
 package invengo.cn.rocketmq.remoting;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,6 +24,7 @@ import io.netty.channel.ChannelHandlerContext;
 
 public class NettyServerTest {
 
+	private static Logger logger = LogManager.getLogger(NettyServerTest.class);
 
 	private static NettyRemotingServer remotingServer;
 	private static NettyRemotingClient remotingClient;
@@ -72,12 +73,17 @@ public class NettyServerTest {
 	
 	@Test
 	public void testInvokeSync() throws RemotingTimeoutException, RemotingSendRequestException, InterruptedException {
-		
-		RemotingCommand request = RemotingCommand.createRequestCommand(0, null);
+		TestCustomHeader requestHeader = new TestCustomHeader();
+		requestHeader.setBrokerAddr("127.0.0.1:10891");
+		requestHeader.setBrokerName("test-broker");
+		RemotingCommand request = RemotingCommand.createRequestCommand(0, requestHeader);
         request.setCode(2);
         request.setBody("hello".getBytes());
-        remotingClient.invokeSync("localhost:8888", request, 1000 * 3);
+        RemotingCommand response = remotingClient.invokeSync("localhost:8888", request, 1000 * 3);
+        logger.info(response);
 	}
+	
+	
 	
 	@Test
 	public void testInvokeAsync() throws RemotingTimeoutException, RemotingSendRequestException, InterruptedException {
@@ -119,6 +125,35 @@ public class NettyServerTest {
 		}
 		latch.await();
 		assertEquals(sendNums, count.get());
+	}
+	
+}
+
+class TestCustomHeader implements CommandCustomHeader{
+	
+	private String brokerName;
+	
+	private String brokerAddr;
+
+	public void checkFileds() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getBrokerName() {
+		return brokerName;
+	}
+
+	public void setBrokerName(String brokerName) {
+		this.brokerName = brokerName;
+	}
+
+	public String getBrokerAddr() {
+		return brokerAddr;
+	}
+
+	public void setBrokerAddr(String brokerAddr) {
+		this.brokerAddr = brokerAddr;
 	}
 	
 }

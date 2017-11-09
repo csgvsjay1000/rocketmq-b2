@@ -1,3 +1,7 @@
-[10:05:52:531] [INFO] - invengo.cn.rocketmq.broker.topic.TopicConfigManagerTest.testEncode(TopicConfigManagerTest.java:22) - {"dataVersion":{},"topicConcurrentMap":{}}
-[15:05:27:053] [INFO] - invengo.cn.rocketmq.broker.out.BrokerOutAPI.registerBroker(BrokerOutAPI.java:69) - RemotingCommand [code=3, opaque=1, remark=request type 2 not supported]
-[15:17:29:742] [INFO] - invengo.cn.rocketmq.broker.out.BrokerOutAPI.registerBroker(BrokerOutAPI.java:69) - RemotingCommand [code=2, opaque=1, remark=hello]
+[16:54:08:150] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
+[16:54:08:240] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:55389]
+[16:54:08:261] [INFO] - invengo.cn.rocketmq.broker.out.BrokerOutAPI.registerBroker(BrokerOutAPI.java:78) - RemotingCommand [code=3, opaque=1, remark=request type 103 not supported, extFields=null ]
+[17:03:04:359] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:10198
+[17:04:22:294] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:10198
+[17:04:22:495] [INFO] - invengo.cn.rocketmq.broker.out.BrokerOutAPI.registerBroker(BrokerOutAPI.java:78) - RemotingCommand [code=0, opaque=1, remark=null, extFields=null ]
+[17:05:48:552] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:55758]

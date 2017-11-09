@@ -73,6 +73,7 @@ public class BrokerOutAPI {
 		
 		RemotingCommand request = RemotingCommand.createRequestCommand(RequestCode.REGISTER_BROKER, requestHeader);
 		request.setRemark("hello");
+		request.setBody(topicConfigWrapper.encode());
 		RemotingCommand response = this.remotingClient.invokeSync(namesrvAddr, request, 3000);
 		logger.info(response);
 		return null;

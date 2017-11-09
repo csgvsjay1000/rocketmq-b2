@@ -21,6 +21,16 @@ public class RemotingCommand {
 	static AtomicInteger requestId = new AtomicInteger(0);
 	private static final int RPC_TYPE = 0;  //flag标志位  第1位, 0 表示request，1表示response
 	private static final int RPC_ONEWAY = 1;  //flag标志位  第二位, 0 表示RPC，1表示oneway
+	private static final Map<Class, String> CANONICAL_NAME_CACHE = new HashMap<Class, String>();
+	private static final String STRING_CANONICAL_NAME = String.class.getCanonicalName();
+    private static final String DOUBLE_CANONICAL_NAME_1 = Double.class.getCanonicalName();
+    private static final String DOUBLE_CANONICAL_NAME_2 = double.class.getCanonicalName();
+    private static final String INTEGER_CANONICAL_NAME_1 = Integer.class.getCanonicalName();
+    private static final String INTEGER_CANONICAL_NAME_2 = int.class.getCanonicalName();
+    private static final String LONG_CANONICAL_NAME_1 = Long.class.getCanonicalName();
+    private static final String LONG_CANONICAL_NAME_2 = long.class.getCanonicalName();
+    private static final String BOOLEAN_CANONICAL_NAME_1 = Boolean.class.getCanonicalName();
+    private static final String BOOLEAN_CANONICAL_NAME_2 = boolean.class.getCanonicalName();
 	
 	private int code;
 	private int flag = 0;
@@ -68,6 +78,17 @@ public class RemotingCommand {
 			remarkLength = remarkBytes.length;
 		}
 		length += remarkLength;
+		length += 4;  // extFields length
+		byte[] extBytes = null;
+		if (customHeader != null) {
+			this.customHeaderEncode();
+		}
+		if (null != this.extFields) {
+			extBytes = RemotingCommand.mapSerialize(extFields);
+			if (extBytes != null) {
+				length += extBytes.length;
+			}
+		}
 		
 		length += bodyLength;
 		
@@ -83,7 +104,12 @@ public class RemotingCommand {
 		}else {
 			byteBuffer.putInt(0);
 		}
-		
+		if (extBytes != null) {
+			byteBuffer.putInt(extBytes.length);
+			byteBuffer.put(extBytes);
+		}else {
+			byteBuffer.putInt(0);
+		}
 		
 		if (body != null) {
 			byteBuffer.put(body);
@@ -105,7 +131,7 @@ public class RemotingCommand {
 		headerLength += 4;  // flag length
 		headerLength += 4;  // opaque length
 		headerLength += 4;  // remarkHeadLength
-		
+		headerLength += 4;  // extFieldLength
 		
 		cmd.setCode(code);
 		cmd.setFlag(flag);
@@ -115,6 +141,14 @@ public class RemotingCommand {
 			byte[] remarkBytes = new byte[remarkHeadLength];
 			byteBuffer.get(remarkBytes);
 			cmd.setRemark(new String(remarkBytes, CHARSET_UTF8));
+		}
+		int extFieldLength = byteBuffer.getInt();
+
+		if (extFieldLength > 0) {
+			headerLength += extFieldLength;
+			byte[] extBytes = new byte[extFieldLength];
+			byteBuffer.get(extBytes);
+			cmd.extFields = mapDeserialize(extBytes);
 		}
 		
 		if (length > headerLength) {
@@ -127,9 +161,6 @@ public class RemotingCommand {
 	}
 	
 	public void customHeaderEncode(){
-		if (this.customHeader == null) {
-			return;
-		}
 		Field[] fields = getClazzFields(this.customHeader.getClass());
 		if (extFields == null) {
 			this.extFields = new HashMap<String, String>();
@@ -152,12 +183,62 @@ public class RemotingCommand {
 		}
 	}
 	
+	public CommandCustomHeader decodeCustomHeader(Class<? extends CommandCustomHeader> classHeader) {
+		CommandCustomHeader objHeader = null;
+		try {
+			objHeader = classHeader.newInstance();
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+		if (this.extFields == null) {
+			return objHeader;
+		}
+		Field[] fields = getClazzFields(classHeader);
+		for (Field field : fields) {
+			if (!Modifier.isStatic(field.getModifiers())) {
+				String fieldName = field.getName();
+				if (!fieldName.startsWith("this")) {
+					String value = this.extFields.get(fieldName);
+					if (value == null) {
+						continue;
+					}
+					field.setAccessible(true);
+					String type = getCanonicalName(field.getType());
+					Object valueParsed = null;
+					
+					if (type.equals(STRING_CANONICAL_NAME)) {
+                        valueParsed = value;
+                    } else if (type.equals(INTEGER_CANONICAL_NAME_1) || type.equals(INTEGER_CANONICAL_NAME_2)) {
+                        valueParsed = Integer.parseInt(value);
+                    } else if (type.equals(LONG_CANONICAL_NAME_1) || type.equals(LONG_CANONICAL_NAME_2)) {
+                        valueParsed = Long.parseLong(value);
+                    } else if (type.equals(BOOLEAN_CANONICAL_NAME_1) || type.equals(BOOLEAN_CANONICAL_NAME_2)) {
+                        valueParsed = Boolean.parseBoolean(value);
+                    } else if (type.equals(DOUBLE_CANONICAL_NAME_1) || type.equals(DOUBLE_CANONICAL_NAME_2)) {
+                        valueParsed = Double.parseDouble(value);
+                    }
+					try {
+						field.set(objHeader, valueParsed);
+
+					} catch (Exception e) {
+						logger.error("Failed field [{}] decoding", fieldName, e);
+					}
+				}
+			}
+			
+		}
+		return objHeader;
+	}
+	
 	public static byte[] mapSerialize(Map<String, String> map) {
 		if (null == map || map.isEmpty()) {
 			return null;
 		}
 		// keySize + key + valueSize + value
 		int totalLength = 0;
+		
 		int kvLength = 0;
 		
 		Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
@@ -219,6 +300,17 @@ public class RemotingCommand {
 	
 	private Field[] getClazzFields(Class<? extends CommandCustomHeader> classHeader){
 		return classHeader.getDeclaredFields();
+	}
+	
+	private String getCanonicalName(Class clazz){
+		String name = CANONICAL_NAME_CACHE.get(clazz);
+		if (name == null) {
+			name = clazz.getCanonicalName();
+			synchronized (CANONICAL_NAME_CACHE) {
+				CANONICAL_NAME_CACHE.put(clazz, name);
+			}
+		}
+		return name;
 	}
 	
 	public RemotingCommandType getType() {
@@ -298,9 +390,17 @@ public class RemotingCommand {
 		this.customHeader = customHeader;
 	}
 
+	public Map<String, String> getExtFields() {
+		return extFields;
+	}
+
+	public void setExtFields(Map<String, String> extFields) {
+		this.extFields = extFields;
+	}
+
 	@Override
     public String toString() {
-        return "RemotingCommand [code=" + code + ", opaque=" + opaque +", remark="+remark+"]";
+        return "RemotingCommand [code=" + code + ", opaque=" + opaque +", remark="+remark+", extFields="+extFields+" ]";
     }
 	
 }

@@ -1,0 +1,3 @@
+[10:05:52:531] [INFO] - invengo.cn.rocketmq.broker.topic.TopicConfigManagerTest.testEncode(TopicConfigManagerTest.java:22) - {"dataVersion":{},"topicConcurrentMap":{}}
+[15:05:27:053] [INFO] - invengo.cn.rocketmq.broker.out.BrokerOutAPI.registerBroker(BrokerOutAPI.java:69) - RemotingCommand [code=3, opaque=1, remark=request type 2 not supported]
+[15:17:29:742] [INFO] - invengo.cn.rocketmq.broker.out.BrokerOutAPI.registerBroker(BrokerOutAPI.java:69) - RemotingCommand [code=2, opaque=1, remark=hello]

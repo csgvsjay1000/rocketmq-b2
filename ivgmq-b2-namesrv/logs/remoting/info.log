@@ -1,6 +1,8 @@
-[14:27:43:535] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:8888
-[15:05:19:841] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
-[15:05:26:989] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:195) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:51129]
-[15:17:19:528] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
-[15:17:29:705] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:51249]
-[15:17:29:730] [INFO] - invengo.cn.rocketmq.namesrv.processor.DefaultRequestProcessor.processRequest(DefaultRequestProcessor.java:22) - hello
+[10:18:33:278] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
+[10:18:41:788] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:52278]
+[10:18:41:810] [INFO] - invengo.cn.rocketmq.namesrv.processor.DefaultRequestProcessor.processRequest(DefaultRequestProcessor.java:23) - hello
+[10:22:01:922] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:52320]
+[13:46:01:294] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
+[13:46:10:852] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:53580]
+[17:04:01:152] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer.start(NettyRemotingServer.java:117) - server bind success/0:0:0:0:0:0:0:0:9876
+[17:04:22:402] [INFO] - invengo.cn.rocketmq.remoting.netty.NettyRemotingServer$NettyConnectManagerHandler.channelActive(NettyRemotingServer.java:198) - NETTY SERVER PIPELINE: channelActive, the channel[127.0.0.1:55741]

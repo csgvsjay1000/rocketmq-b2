@@ -4,9 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import invengo.cn.rocketmq.common.protocol.RequestCode;
+import invengo.cn.rocketmq.common.protocol.body.TopicConfigSerializeWrapper;
+import invengo.cn.rocketmq.common.protocol.header.namesrv.RegisterBrokerRequestHeader;
 import invengo.cn.rocketmq.namesrv.NamesrvController;
 import invengo.cn.rocketmq.remoting.netty.NettyRequestProcessor;
 import invengo.cn.rocketmq.remoting.protocol.RemotingCommand;
+import invengo.cn.rocketmq.remoting.protocol.RemotingSycResponseCode;
 import io.netty.channel.ChannelHandlerContext;
 
 public class DefaultRequestProcessor implements NettyRequestProcessor{
@@ -20,7 +23,6 @@ public class DefaultRequestProcessor implements NettyRequestProcessor{
 	}
 	
 	public RemotingCommand processRequest(ChannelHandlerContext ctx, RemotingCommand request) {
-		logger.info(request.getRemark());
 		switch (request.getCode()) {
 		case RequestCode.REGISTER_BROKER:
 			return this.registerBroker(ctx, request);
@@ -37,8 +39,24 @@ public class DefaultRequestProcessor implements NettyRequestProcessor{
 	}
 	
 	private RemotingCommand registerBroker(ChannelHandlerContext ctx, RemotingCommand request){
-		
-		return null;
+		logger.debug("request: "+request);
+		RegisterBrokerRequestHeader requestHeader = (RegisterBrokerRequestHeader) request.decodeCustomHeader(RegisterBrokerRequestHeader.class);
+		logger.debug("requestHeader: "+requestHeader);
+		TopicConfigSerializeWrapper topicConfigSerializeWrapper = null;
+		if (request.getBody() != null) {
+			topicConfigSerializeWrapper = TopicConfigSerializeWrapper.decode(request.getBody(), TopicConfigSerializeWrapper.class);
+		}
+		this.namesrvController.getRouteInfoManager().registerBroker(
+				requestHeader.getClusterName(), 
+				requestHeader.getBrokerAddr(),
+				requestHeader.getBrokerName(), 
+				requestHeader.getBrokerId(), 
+				topicConfigSerializeWrapper);
+		RemotingCommand response = RemotingCommand.createResponseCommand(RemotingSycResponseCode.SUCCESS);
+		response.setOpaque(request.getOpaque());
+		logger.debug("response: "+response);
+
+		return response;
 	}
 
 }

@@ -42,5 +42,9 @@ public class NamesrvController {
 	private void registerProcessor(){
 		this.remotingServer.registerDefaultProcessor(new DefaultRequestProcessor(this), null);
 	}
+
+	public RouteInfoManager getRouteInfoManager() {
+		return routeInfoManager;
+	}
 	
 }

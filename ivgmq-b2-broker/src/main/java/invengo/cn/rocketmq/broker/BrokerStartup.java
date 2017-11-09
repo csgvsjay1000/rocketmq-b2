@@ -18,7 +18,7 @@ public class BrokerStartup {
 	private static BrokerController createBrokerController(String[] args){
 		
 		NettyServerConfig nettyServerConfig = new NettyServerConfig();
-		nettyServerConfig.setListenPort(9876);
+		nettyServerConfig.setListenPort(10198);
 		BrokerConfig brokerConfig = new BrokerConfig();
 		NettyClientConfig nettyClientConfig = new NettyClientConfig();
 		BrokerController controller = new BrokerController(brokerConfig, nettyServerConfig, nettyClientConfig);

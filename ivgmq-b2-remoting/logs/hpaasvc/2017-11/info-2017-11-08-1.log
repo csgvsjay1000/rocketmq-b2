@@ -1,0 +1,7 @@
+[16:37:33:094] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.mapSerializeTest(RemotingCommandTest.java:18) - RemotingCommand [code=2, opaque=1, remark=null]
+[16:39:32:086] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.mapSerializeTest(RemotingCommandTest.java:18) - RemotingCommand [code=2, opaque=1, remark=null]
+[17:16:11:361] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.mapSerializeTest(RemotingCommandTest.java:20) - RemotingCommand [code=2, opaque=1, remark=null]
+[17:47:32:675] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.testMapSerialize(RemotingCommandTest.java:23) - {=, brokerAddr=127.0.0.1:10891, brokerName=test-broker}
+[17:48:35:806] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.testMapSerialize(RemotingCommandTest.java:23) - {=, brokerAddr=127.0.0.1:10891, brokerName=test-broker}
+[17:49:59:327] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.testMapSerialize(RemotingCommandTest.java:23) - {=, brokerAddr=127.0.0.1:10891, brokerName=test-broker}
+[17:51:35:375] [INFO] - invengo.cn.rocketmq.remoting.protocol.RemotingCommandTest.testMapSerialize(RemotingCommandTest.java:23) - {brokerAddr=127.0.0.1:10891, brokerName=test-broker}

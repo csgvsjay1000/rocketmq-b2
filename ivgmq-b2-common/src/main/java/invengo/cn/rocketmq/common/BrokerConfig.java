@@ -31,6 +31,10 @@ public class BrokerConfig {
     private int consumerManageThreadPoolNums = 32;
     
     private int registerBrokerTimeoutMills = 6000;
+    private int sendThreadPoolQueueCapacity = 10000;
+    private int pullThreadPoolQueueCapacity = 100000;
+    private int clientManagerThreadPoolQueueCapacity = 1000000;
+    private int consumerManagerThreadPoolQueueCapacity = 1000000;
     
     public static String localHostName() {
         try {
@@ -194,6 +198,37 @@ public class BrokerConfig {
 	public void setRegisterBrokerTimeoutMills(int registerBrokerTimeoutMills) {
 		this.registerBrokerTimeoutMills = registerBrokerTimeoutMills;
 	}
-	
+
+	public int getSendThreadPoolQueueCapacity() {
+		return sendThreadPoolQueueCapacity;
+	}
+
+	public void setSendThreadPoolQueueCapacity(int sendThreadPoolQueueCapacity) {
+		this.sendThreadPoolQueueCapacity = sendThreadPoolQueueCapacity;
+	}
+
+	public int getPullThreadPoolQueueCapacity() {
+		return pullThreadPoolQueueCapacity;
+	}
+
+	public void setPullThreadPoolQueueCapacity(int pullThreadPoolQueueCapacity) {
+		this.pullThreadPoolQueueCapacity = pullThreadPoolQueueCapacity;
+	}
+
+	public int getClientManagerThreadPoolQueueCapacity() {
+		return clientManagerThreadPoolQueueCapacity;
+	}
+
+	public void setClientManagerThreadPoolQueueCapacity(int clientManagerThreadPoolQueueCapacity) {
+		this.clientManagerThreadPoolQueueCapacity = clientManagerThreadPoolQueueCapacity;
+	}
+
+	public int getConsumerManagerThreadPoolQueueCapacity() {
+		return consumerManagerThreadPoolQueueCapacity;
+	}
+
+	public void setConsumerManagerThreadPoolQueueCapacity(int consumerManagerThreadPoolQueueCapacity) {
+		this.consumerManagerThreadPoolQueueCapacity = consumerManagerThreadPoolQueueCapacity;
+	}
 	
 }
