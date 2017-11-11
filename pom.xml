@@ -68,6 +68,7 @@
         <module>ivgmq-b2-broker</module>
         <module>ivgmq-b2-client</module>
         <module>ivgmq-b2-example</module>
+        <module>ivgmq-b2-store</module>
         
     </modules>
    

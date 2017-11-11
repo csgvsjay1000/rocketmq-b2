@@ -1,0 +1,4 @@
+[14:26:42:226] [INFO] - invengo.cn.rocketmq.store.impl.MappedFile.ensureDirOK(MappedFile.java:44) - target\unit_test_store\MappedFileTest mkdir OK
+[14:26:42:230] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:31) - true
+[14:42:58:961] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:29) - true
+[14:44:03:289] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
