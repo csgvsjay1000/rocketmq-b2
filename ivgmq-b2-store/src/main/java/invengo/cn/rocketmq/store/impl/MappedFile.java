@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MappedFile {
+public class MappedFile extends ReferenceResource{
 
 	private static Logger logger = LogManager.getLogger(MappedFile.class);
 	
@@ -96,8 +96,15 @@ public class MappedFile {
 	
 	public SelectMappedBufferResult selectMappedBuffer(int pos) {
 		int readPosition = getReadPosition();
-		if (pos < readPosition && pos > 0) {
-			
+		if (pos < readPosition && pos >= 0) {
+			if (this.hold()) {
+				ByteBuffer byteBuffer = this.mappedByteBuffer.slice();
+				byteBuffer.position(pos);
+				int size = readPosition - pos;
+				ByteBuffer byteBufferNew = byteBuffer.slice();
+				byteBufferNew.limit(size);
+				return new SelectMappedBufferResult(this.fileFromOffset+pos, byteBufferNew, size, this);
+			}
 		}
 		
 		return null;

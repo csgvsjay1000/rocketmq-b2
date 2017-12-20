@@ -1,4 +1,23 @@
-[14:26:42:226] [INFO] - invengo.cn.rocketmq.store.impl.MappedFile.ensureDirOK(MappedFile.java:44) - target\unit_test_store\MappedFileTest mkdir OK
-[14:26:42:230] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:31) - true
-[14:42:58:961] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:29) - true
-[14:44:03:289] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:14:28:636] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:15:16:637] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:16:05:499] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:16:15:360] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:45:30:175] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:45:55:227] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:35) - null
+[14:47:28:828] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:47:40:899] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:35) - null
+[14:47:48:494] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:51:24:382] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:51:41:299] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:35) - null
+[14:51:52:335] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:32) - true
+[14:54:13:546] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:35) - invengo.cn.rocketmq.store.impl.SelectMappedBufferResult@235ecd9f
+[14:57:31:744] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:33) - true
+[14:57:31:746] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:39) - Once, there was a chance for me!
+[14:58:00:085] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:33) - true
+[14:58:00:087] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:39) - Once,你好 there was a chance for
+[14:58:31:856] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:33) - true
+[14:58:31:858] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:39) - Once,你好 there was a chance for me!
+[15:07:39:614] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:33) - true
+[15:07:39:616] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:39) - Once,你好 there was a chance for me!
+[15:08:31:644] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:33) - true
+[15:08:31:646] [INFO] - invengo.cn.rocketmq.store.MappedFileTest.testAppendMessage(MappedFileTest.java:39) - Once,你好 there was a chance for me!
